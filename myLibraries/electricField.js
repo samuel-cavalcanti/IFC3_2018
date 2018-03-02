@@ -2,11 +2,13 @@ var electricField = {
 
     raycaster: new THREE.Raycaster(),
     transformControl: null,
+    charges: [],
 
     render: function () {
 
         electricField.findCharge();
         electricField.transformControl.update();
+        electricField.updateCharges();
 
 
 
@@ -43,13 +45,9 @@ var electricField = {
             if (intersects[i].object.name == "electricCharge") {
                 
                 var electricCharge = intersects[i].object;
-                console.log(electricCharge);
 
                 this.transformControl.attach(electricCharge);
                 
-               
-
-
             }
 
 
@@ -57,17 +55,14 @@ var electricField = {
 
     },
 
-    params: {
-        addCharge: electricCharge.addCharge
+    addCharge : function (){
+        var change = new ElectricCharge();
+        change.show();
+        electricField.charges.push(change);
     },
 
+    
     setTransformControl: function () {
-        // universe.controls.addEventListener('start', function(){
-        //     electricField.cancelHideTransorm();
-        // } );
-        // universe.controls.addEventListener("end",function(){
-        //     electricField.delayHideTransform();
-        // });
         
         electricField.transformControl = new THREE.TransformControls(universe.camera, universe.renderer.domElement);
         electricField.transformControl.addEventListener('change', electricField.render);
@@ -76,35 +71,23 @@ var electricField = {
 
     },
 
-    hiding: null,
-
-    delayHideTransform : function(){
-        this.cancelHideTransorm();
-        this.hideTransform();
-    },
-
-    cancelHideTransorm : function(){
-        if (this.hiding) clearTimeout(this.hiding);
-    },
-
-    hideTransform: function (){
-        this.hiding = setTimeout(function(){
-            electricField.transformControl.detach( electricField.transformControl.object);
-
-        }, 2000);
-        
-
-    },
-
 
     init: function () {
         electricField.setTransformControl();
+        electricField.params.addCharge = electricField.addCharge;
         universe.gui.add(electricField.params, "addCharge");
+    },
 
 
+    params: {
+        addCharge: null
+    },
+
+    updateCharges : function(){
+        for (var i in this.charges){
+            this.charges[i].update();
+        }
     }
-
-
 
 
 };
