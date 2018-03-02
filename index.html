@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+ padding: 0;
+            margin: 0;
+-->
+<html>
+
+<head>
+    <title>VisualizationJs</title>
+    <meta charset="UTF-8">
+
+    <style>
+      body {
+        color: #aaa;
+        font-family:Monospace;
+        font-size:13px;
+        text-align:center;
+        background-color: #000;
+        margin: 0;
+        
+    }
+    #info {
+        position: absolute;
+        top: 0px; width: 100%;
+        padding: 0;
+        z-index:100;
+    }
+    .lbl { color:#fff; font-size:16px; font-weight:bold; position: absolute; bottom:0px; z-index:100; text-shadow:#000 1px 1px 1px; background-color:rgba(0,0,0,0.85); padding:1em }
+    .test { color:#fff; font-size:16px; font-weight:bold; position: absolute; bottom:450px; ; z-index:100; text-shadow:#000 1px 1px 1px; background-color:rgba(0,0,0,0.85); padding:1em }
+    #lbl_left { text-align:left; left:0px }
+    #lbl_right { text-align:left; right:0px }
+    .g { color:#aaa }
+    .c { color:#fa0 }
+    a { color:red }
+    </style>
+</head>
+
+
+<body>
+
+    <div id="container"></div>
+  
+
+    <script src="libraries/three.js"></script>
+
+    <script src="libraries/dat.gui.min.js"> </script>
+
+    <script src="libraries/stats.min.js"></script>
+
+    <script src="libraries/three.min.js"></script>
+
+    <script src="libraries/OrbitControls.js"> </script>
+
+    <script src="libraries/TrackballControls.js"> </script>
+
+    <script src="myLibraries/universe.js"></script>
+
+    <script src= "myLibraries/electricCharge.js"></script>
+
+
+</body>
+
+</html>
