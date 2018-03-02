@@ -67,7 +67,7 @@ var universe = {
     universe.camera.aspect = window.innerWidth / window.innerHeight;
     universe.camera.updateProjectionMatrix();
     universe.renderer.setSize(window.innerWidth, window.innerHeight);
-    network.pickingTexture.setSize(window.innerWidth, window.innerHeight);
+    
   },
 
   onMouseMove: function (event) {
