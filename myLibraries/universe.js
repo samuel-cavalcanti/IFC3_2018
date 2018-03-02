@@ -1,4 +1,3 @@
-
 var universe = {
   state: false,
   renderer: new THREE.WebGLRenderer({
@@ -25,8 +24,12 @@ var universe = {
 
     universe.camera.position.z = 1000;
 
-    universe.controls = new THREE.TrackballControls(universe.camera, universe.renderer.domElement);
+    universe.controls = new THREE.OrbitControls(universe.camera, universe.renderer.domElement);
+    universe.controls.damping - 0.2;
+
     universe.guiControl = "Trackball Controls";
+
+   
 
     universe.state = true;
 
@@ -38,17 +41,18 @@ var universe = {
 
     window.addEventListener("resize", universe.onWindowResize, false);
     universe.renderer.domElement.addEventListener("mousemove", universe.onMouseMove);
-    
-    universe.drawLine(new THREE.Vector3( 20000, 0, 0), "#ff0000" );
 
-    universe.drawLine(new THREE.Vector3( 0, 20000, 0), "#00ff00" );
 
-    universe.drawLine(new THREE.Vector3( 0, 0, 20000), 0x0000ff );
-    
-    
-    
+    universe.drawLine(new THREE.Vector3(20000, 0, 0), "#ff0000");
 
-   
+    universe.drawLine(new THREE.Vector3(0, 20000, 0), "#00ff00");
+
+    universe.drawLine(new THREE.Vector3(0, 0, 20000), 0x0000ff);
+
+
+
+
+
 
     universe.gui.close();
 
@@ -67,7 +71,7 @@ var universe = {
     universe.camera.aspect = window.innerWidth / window.innerHeight;
     universe.camera.updateProjectionMatrix();
     universe.renderer.setSize(window.innerWidth, window.innerHeight);
-    
+
   },
 
   onMouseMove: function (event) {
@@ -96,23 +100,25 @@ var universe = {
 
   },
 
-  drawLine: function (finalPoint, colorHex ){
-    var material = new THREE.LineBasicMaterial( { color: colorHex } );
+  drawLine: function (finalPoint, colorHex) {
+    var material = new THREE.LineBasicMaterial({
+      color: colorHex
+    });
 
     var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3( 0, 0, 0) );
+    geometry.vertices.push(new THREE.Vector3(0, 0, 0));
     geometry.vertices.push(finalPoint);
 
-    var line = new THREE.Line( geometry, material ); 
+    var line = new THREE.Line(geometry, material);
 
-    
+
 
     universe.scene.add(line);
 
 
   }
 
-  
+
 
 
 
