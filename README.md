@@ -14,5 +14,5 @@ https://threejs.org/examples/#webgl_geometry_spline_editor
 
 https://codepen.io/programking/pen/MyOQpO
   
-  melhor de todas
+  melhor de todas: 
  https://stackoverflow.com/
