@@ -2,7 +2,13 @@ var electricField = {
 
     raycaster: new THREE.Raycaster(),
     transformControl: null,
-    charges: [],
+    positiveCharges: [],
+    negativeCharges: [],
+    allCharges: [],
+    sphereOptions: {
+        folder: null,
+        item: null
+    },
 
     render: function () {
 
@@ -43,11 +49,25 @@ var electricField = {
 
 
             if (intersects[i].object.name == "electricCharge") {
-                
+
                 var electricCharge = intersects[i].object;
 
+
                 this.transformControl.attach(electricCharge);
-                
+
+
+
+                var indexCharge = electricField.findbySphere(electricCharge);
+
+                if (this.sphereOptions.item == null) {
+                    this.sphereOptions.item = this.sphereOptions.folder.add(this.allCharges[indexCharge].properties, "guiCharge", 1, 1000).name("carga: ");
+                    this.sphereOptions.folder.open();
+                } else {
+                    this.sphereOptions.item.object = this.allCharges[indexCharge].properties;
+
+                }
+
+
             }
 
 
@@ -55,18 +75,50 @@ var electricField = {
 
     },
 
-    addCharge : function (){
-        var change = new ElectricCharge();
-        change.show();
-        electricField.charges.push(change);
+    addPositiveCharge: function () {
+        var charge = new ElectricCharge("positive");
+        charge.show();
+        electricField.allCharges.push(charge);
     },
 
-    
+    addNegativeCharge: function () {
+        var charge = new ElectricCharge("negative");
+        charge.show();
+        electricField.allCharges.push(charge);
+    },
+
+    deleteCharge: function () {
+        if (!electricField.transformControl.object)
+            return;
+
+        var indexCharge = electricField.findbySphere(electricField.transformControl.object);
+
+        electricField.allCharges[indexCharge].hide();
+        electricField.transformControl.detach();
+        electricField.allCharges.splice(indexCharge, 1);
+
+    },
+
+    findbySphere: function (object) {
+        for (var i in electricField.allCharges) {
+            if (object.uuid == electricField.allCharges[i].sphere.uuid)
+                return i;
+        }
+        return null;
+    },
+
+    removeCharge: function (indexCharge) {
+
+
+
+
+    },
+
     setTransformControl: function () {
-        
+
         electricField.transformControl = new THREE.TransformControls(universe.camera, universe.renderer.domElement);
         electricField.transformControl.addEventListener('change', electricField.render);
-        
+
         universe.scene.add(electricField.transformControl);
 
     },
@@ -74,20 +126,31 @@ var electricField = {
 
     init: function () {
         electricField.setTransformControl();
-        electricField.params.addCharge = electricField.addCharge;
-        universe.gui.add(electricField.params, "addCharge");
+        electricField.params.addPositiveCharge = electricField.addPositiveCharge;
+        electricField.params.addNegativeCharge = electricField.addNegativeCharge;
+        electricField.params.deleteCharge = electricField.deleteCharge;
+        universe.gui.add(electricField.params, "addPositiveCharge").name("addPositive");
+        universe.gui.add(electricField.params, "addNegativeCharge").name("addNegative");
+        universe.gui.add(electricField.params, "deleteCharge");
+        electricField.sphereOptions.folder = universe.gui.addFolder("electricCharge");
     },
 
 
     params: {
-        addCharge: null
+        addPositiveCharge: null,
+        addNegativeCharge: null,
+        deleteCharge: null
     },
 
-    updateCharges : function(){
-        for (var i in this.charges){
-            this.charges[i].update();
+    updateCharges: function () {
+        for (var i in this.allCharges) {
+            this.allCharges[i].update();
         }
-    }
+
+    },
+
+
+
 
 
 };

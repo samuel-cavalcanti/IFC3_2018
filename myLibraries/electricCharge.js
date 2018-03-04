@@ -1,16 +1,29 @@
-   function ElectricCharge() {
+   function ElectricCharge(type) {
+       // 
+       var direction = 1;
+       var typeColor = 0xffff00;
+
+       if (type == "negative") {
+           direction = -1;
+           typeColor = "#0d076b";
+          
+       }
+
+
        var visible = false;
        var object = this;
-
+       
        this.sphere = null;
        this.lineField = null;
        this.properties = {
            coulombConstant: 9e-9,
-           charge: 9e+16,
+           charge: 9e+9 * direction ,
+           guiCharge: 500,
            electricPotentialVector: new THREE.Vector3(),
            electricPotentialUnitVector: new THREE.Vector3(),
            positionUnitVector: new THREE.Vector3(),
-           distance: 1
+           distance: 1,
+           type: type
        };
 
        createSphere();
@@ -41,19 +54,14 @@
 
 
        this.update = function () {
-        updateLineField();
+           updateLineField();
 
        };
 
 
        function createLineField() {
 
-           object.properties.positionUnitVector.copy(object.sphere.position);
-           object.properties.positionUnitVector.normalize();
-           object.properties.electricPotentialVector.copy(object.properties.positionUnitVector);
-           var scalar = (object.properties.coulombConstant * object.properties.charge) / (Math.pow(object.sphere.position.length(), 2));
-           object.properties.electricPotentialVector.multiplyScalar(scalar);
-           object.properties.electricPotentialVector.add(object.sphere.position);
+           calculatingTheElectricPotential()
 
            object.lineField = new LineField(object.sphere.position, object.properties.electricPotentialVector);
 
@@ -61,14 +69,23 @@
 
        }
 
-       function updateLineField() {
+       function calculatingTheElectricPotential() {
+
+
 
            object.properties.positionUnitVector.copy(object.sphere.position);
            object.properties.positionUnitVector.normalize();
            object.properties.electricPotentialVector.copy(object.properties.positionUnitVector);
-           var scalar = (object.properties.coulombConstant * object.properties.charge) / (Math.pow(object.sphere.position.length(), 2));
+
+           var scalar = (object.properties.coulombConstant * object.properties.charge* object.properties.guiCharge) / object.sphere.position.distanceTo(new THREE.Vector3());
+
            object.properties.electricPotentialVector.multiplyScalar(scalar);
            object.properties.electricPotentialVector.add(object.sphere.position);
+       }
+
+       function updateLineField() {
+
+           calculatingTheElectricPotential()
 
            object.lineField.update(object.sphere.position, object.properties.electricPotentialVector);
 
@@ -85,7 +102,7 @@
 
            var geometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments, phiStart, phiLength, thetaStart, thetaLength);
            var material = new THREE.MeshBasicMaterial({
-               color: 0xffff00
+               color: typeColor
            });
            var sphere = new THREE.Mesh(geometry, material);
 
