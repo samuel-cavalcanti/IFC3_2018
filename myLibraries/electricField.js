@@ -134,6 +134,7 @@ var electricField = {
         universe.gui.add(electricField.params, "addNegativeCharge").name("addNegative");
         universe.gui.add(electricField.params, "deleteCharge");
         electricField.sphereOptions.folder = universe.gui.addFolder("electricCharge");
+        universe.gui.open();
     },
 
 

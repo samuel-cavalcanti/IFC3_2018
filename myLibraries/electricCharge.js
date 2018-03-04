@@ -101,6 +101,8 @@
            calculatingTheElectricPotential()
 
            object.lineField.update(object.sphere.position, object.properties.electricPotentialUnitVector,object.properties.arrowLength);
+
+       
        
 
        }
