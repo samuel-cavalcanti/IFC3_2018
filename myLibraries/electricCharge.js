@@ -6,24 +6,25 @@
        if (type == "negative") {
            direction = -1;
            typeColor = "#0d076b";
-          
+
        }
 
 
        var visible = false;
        var object = this;
-       
+
        this.sphere = null;
        this.lineField = null;
        this.properties = {
            coulombConstant: 9e-9,
-           charge: 9e+9 * direction ,
+           charge: 9e+9 * direction,
            guiCharge: 500,
            electricPotentialVector: new THREE.Vector3(),
            electricPotentialUnitVector: new THREE.Vector3(),
            positionUnitVector: new THREE.Vector3(),
            distance: 1,
-           type: type
+           type: type,
+           arrowLength:1
        };
 
        createSphere();
@@ -63,7 +64,7 @@
 
            calculatingTheElectricPotential()
 
-           object.lineField = new LineField(object.sphere.position, object.properties.electricPotentialVector);
+           object.lineField = new LineField(object.sphere.position, object.properties.electricPotentialUnitVector,object.properties.arrowLength);
 
 
 
@@ -77,17 +78,30 @@
            object.properties.positionUnitVector.normalize();
            object.properties.electricPotentialVector.copy(object.properties.positionUnitVector);
 
-           var scalar = (object.properties.coulombConstant * object.properties.charge* object.properties.guiCharge) / object.sphere.position.distanceTo(new THREE.Vector3());
+           var distance = object.sphere.position.distanceTo(new THREE.Vector3());
+
+           if (distance == 0.0)
+               distance = 1e-19;
+
+           var scalar = (object.properties.coulombConstant * object.properties.charge * object.properties.guiCharge) / distance;
+
+           object.properties.arrowLength = Math.abs(scalar);
 
            object.properties.electricPotentialVector.multiplyScalar(scalar);
-           object.properties.electricPotentialVector.add(object.sphere.position);
+          
+           object.properties.electricPotentialUnitVector.copy(object.properties.electricPotentialVector);
+           object.properties.electricPotentialUnitVector.normalize();
+
+
+           
        }
 
        function updateLineField() {
 
            calculatingTheElectricPotential()
 
-           object.lineField.update(object.sphere.position, object.properties.electricPotentialVector);
+           object.lineField.update(object.sphere.position, object.properties.electricPotentialUnitVector,object.properties.arrowLength);
+       
 
        }
 

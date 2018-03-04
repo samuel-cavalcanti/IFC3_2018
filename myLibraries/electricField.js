@@ -14,7 +14,7 @@ var electricField = {
 
         electricField.findCharge();
         electricField.transformControl.update();
-        electricField.updateCharges();
+      //  electricField.updateCharges();
 
 
 
@@ -59,8 +59,9 @@ var electricField = {
 
                 var indexCharge = electricField.findbySphere(electricCharge);
 
+
                 if (this.sphereOptions.item == null) {
-                    this.sphereOptions.item = this.sphereOptions.folder.add(this.allCharges[indexCharge].properties, "guiCharge", 1, 1000).name("carga: ");
+                    this.sphereOptions.item = this.sphereOptions.folder.add(this.allCharges[indexCharge].properties, "guiCharge", 1, 1000).name("arrow length: ");
                     this.sphereOptions.folder.open();
                 } else {
                     this.sphereOptions.item.object = this.allCharges[indexCharge].properties;
@@ -149,6 +150,8 @@ var electricField = {
 
     },
 
+    
+
 
 
 
@@ -158,3 +161,13 @@ var electricField = {
 
 electricField.init();
 electricField.render();
+
+electricField.transformControl.addEventListener("change",function(e){
+    if (!electricField.transformControl.object)
+        return;
+
+        var indexCharge = electricField.findbySphere(electricField.transformControl.object);
+        electricField.allCharges[indexCharge].update();
+
+
+} )
