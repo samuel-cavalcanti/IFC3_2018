@@ -63,10 +63,12 @@
        function createLineField() {
 
            calculatingTheElectricPotential()
+          
+         
+           object.lineField = new LineField(object.sphere.position, object.properties.electricPotentialUnitVector,object.properties.arrowLength,type);
+           
 
-           object.lineField = new LineField(object.sphere.position, object.properties.electricPotentialUnitVector,object.properties.arrowLength);
-
-
+           
        }
 
        function calculatingTheElectricPotential() {
@@ -80,11 +82,13 @@
            var distance = object.sphere.position.distanceTo(new THREE.Vector3());
 
            if (distance == 0.0)
-               distance = 1e-19;
+               distance = 1e-10;
 
            var scalar = (object.properties.coulombConstant * object.properties.charge * object.properties.guiCharge) / distance;
 
            object.properties.arrowLength = Math.abs(scalar);
+           if ( object.properties.arrowLength > 207)
+             object.properties.arrowLength= 207;
 
            object.properties.electricPotentialVector.multiplyScalar(scalar);
           
