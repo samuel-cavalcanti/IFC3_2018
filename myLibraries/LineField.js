@@ -88,6 +88,7 @@ function LineField(origin, target, length,type) {
         pTarget.applyEuler(angle);
 
         var pOrigin = new THREE.Vector3().copy(origin);
+       
         
         pOrigin.applyEuler(angle);
         pOrigin.add(origin);

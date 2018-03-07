@@ -17,7 +17,7 @@
        this.lineField = null;
        this.properties = {
            coulombConstant: 9e-9,
-           charge: 9e+9 * direction,
+           charge: 9e+12 * direction,
            guiCharge: 500,
            electricPotentialVector: new THREE.Vector3(),
            electricPotentialUnitVector: new THREE.Vector3(),
@@ -84,7 +84,7 @@
            if (distance == 0.0)
                distance = 1e-10;
 
-           var scalar = (object.properties.coulombConstant * object.properties.charge * object.properties.guiCharge) / distance;
+           var scalar = (object.properties.coulombConstant * object.properties.charge * object.properties.guiCharge) / Math.pow (distance,2);
 
            object.properties.arrowLength = Math.abs(scalar);
            if ( object.properties.arrowLength > 207)
