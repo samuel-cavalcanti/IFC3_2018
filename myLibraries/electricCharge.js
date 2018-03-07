@@ -33,7 +33,7 @@
        this.show = function () {
 
            universe.scene.add(this.sphere);
-           this.lineField.show();
+           
 
            visible = true;
 
@@ -65,7 +65,6 @@
            calculatingTheElectricPotential()
 
            object.lineField = new LineField(object.sphere.position, object.properties.electricPotentialUnitVector,object.properties.arrowLength);
-
 
 
        }
