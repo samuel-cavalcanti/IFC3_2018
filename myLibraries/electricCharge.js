@@ -1,7 +1,7 @@
    function ElectricCharge(type) {
        // 
        var direction = 1;
-       var typeColor = 0xffff00;
+       var typeColor = "#ff0000";
 
        if (type == "negative") {
            direction = -1;
@@ -24,7 +24,7 @@
            positionUnitVector: new THREE.Vector3(),
            distance: 1,
            type: type,
-           arrowLength:1
+           arrowLength: 1
        };
 
        createSphere();
@@ -33,7 +33,7 @@
        this.show = function () {
 
            universe.scene.add(this.sphere);
-           
+
 
            visible = true;
 
@@ -63,12 +63,12 @@
        function createLineField() {
 
            calculatingTheElectricPotential()
-          
-         
-           object.lineField = new LineField(object.sphere.position, object.properties.electricPotentialUnitVector,object.properties.arrowLength,type);
-           
 
-           
+
+           object.lineField = new LineField(object.sphere.position, object.properties.electricPotentialUnitVector, object.properties.arrowLength, type);
+
+
+
        }
 
        function calculatingTheElectricPotential() {
@@ -79,34 +79,40 @@
            object.properties.positionUnitVector.normalize();
            object.properties.electricPotentialVector.copy(object.properties.positionUnitVector);
 
-           var distance = object.sphere.position.distanceTo(new THREE.Vector3());
+           var distance = object.sphere.position.distanceTo(new THREE.Vector3(1e-20, 1e-20, 1e-20));
 
-           if (distance == 0.0)
-               distance = 1e-10;
 
-           var scalar = (object.properties.coulombConstant * object.properties.charge * object.properties.guiCharge) / Math.pow (distance,2);
+           var scalar = (object.properties.coulombConstant * object.properties.charge * object.properties.guiCharge) / Math.pow(distance, 2);
 
            object.properties.arrowLength = Math.abs(scalar);
-           if ( object.properties.arrowLength > 207)
-             object.properties.arrowLength= 207;
+           if (object.properties.arrowLength > 207)
+               object.properties.arrowLength = 207;
 
            object.properties.electricPotentialVector.multiplyScalar(scalar);
-          
+
            object.properties.electricPotentialUnitVector.copy(object.properties.electricPotentialVector);
            object.properties.electricPotentialUnitVector.normalize();
 
 
-           
+
+
+
+
+
+
        }
 
        function updateLineField() {
 
-           calculatingTheElectricPotential()
+           calculatingTheElectricPotential();
 
-           object.lineField.update(object.sphere.position, object.properties.electricPotentialUnitVector,object.properties.arrowLength);
+           var positionTest = new THREE.Vector3().copy(object.sphere.position);
+           positionTest.multiplyScalar(1.);
 
-       
-       
+           object.lineField.update(object.sphere.position, object.properties.electricPotentialUnitVector, object.properties.arrowLength);
+
+
+
 
        }
 
@@ -132,6 +138,8 @@
 
            object.sphere = sphere;
        }
+
+
 
 
 

@@ -5,6 +5,7 @@ var electricField = {
     positiveCharges: [],
     negativeCharges: [],
     allCharges: [],
+    source: null,
     sphereOptions: {
         folder: null,
         item: null
@@ -14,7 +15,7 @@ var electricField = {
 
         electricField.findCharge();
         electricField.transformControl.update();
-      //  electricField.updateCharges();
+        //  electricField.updateCharges();
 
 
 
@@ -44,35 +45,37 @@ var electricField = {
 
         var intersects = electricField.raycaster.intersectObjects(universe.scene.children);
 
+        
+        if ( typeof intersects[0] === "undefined"){
+            
+            return;
+        }
 
-        for (var i = 0; i < intersects.length; i++) {
+        if (intersects[0].object.name == "electricCharge") {
 
-
-            if (intersects[i].object.name == "electricCharge") {
-
-                var electricCharge = intersects[i].object;
-
-
-                this.transformControl.attach(electricCharge);
-
+            var electricCharge = intersects[0].object;
 
 
-                var indexCharge = electricField.findbySphere(electricCharge);
+            this.transformControl.attach(electricCharge);
 
 
-                if (this.sphereOptions.item == null) {
-                    this.sphereOptions.item = this.sphereOptions.folder.add(this.allCharges[indexCharge].properties, "guiCharge", 1, 1000).name("arrow length: ");
-                    this.sphereOptions.folder.open();
-                } else {
-                    this.sphereOptions.item.object = this.allCharges[indexCharge].properties;
 
-                }
+            var indexCharge = electricField.findbySphere(electricCharge);
 
+
+            if (this.sphereOptions.item == null) {
+                this.sphereOptions.item = this.sphereOptions.folder.add(this.allCharges[indexCharge].properties, "guiCharge", 1, 1000).name("arrow length: ");
+                this.sphereOptions.folder.open();
+            } else {
+                this.sphereOptions.item.object = this.allCharges[indexCharge].properties;
 
             }
 
 
         }
+
+
+
 
     },
 
@@ -127,6 +130,7 @@ var electricField = {
 
     init: function () {
         electricField.setTransformControl();
+        electricField.createSource();
         electricField.params.addPositiveCharge = electricField.addPositiveCharge;
         electricField.params.addNegativeCharge = electricField.addNegativeCharge;
         electricField.params.deleteCharge = electricField.deleteCharge;
@@ -135,6 +139,7 @@ var electricField = {
         universe.gui.add(electricField.params, "deleteCharge");
         electricField.sphereOptions.folder = universe.gui.addFolder("electricCharge");
         universe.gui.open();
+
     },
 
 
@@ -151,7 +156,28 @@ var electricField = {
 
     },
 
-    
+
+    createSource: function () {
+        var radius = 180;
+        var widthSegments = 28;
+        var heightSegments = 18;
+        var phiStart = 0;
+        var phiLength = 6.3;
+        var thetaStart = 0;
+        var thetaLength = 6.3;
+
+        var geometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments, phiStart, phiLength, thetaStart, thetaLength);
+        var material = new THREE.MeshBasicMaterial({
+            color: "#ff0000"
+        });
+        var sphere = new THREE.Mesh(geometry, material);
+
+        sphere.name = "source";
+
+        this.source = sphere;
+
+          universe.scene.add(sphere);
+    }
 
 
 
@@ -163,12 +189,30 @@ var electricField = {
 electricField.init();
 electricField.render();
 
-electricField.transformControl.addEventListener("change",function(e){
+electricField.transformControl.addEventListener("change", function (e) {
     if (!electricField.transformControl.object)
         return;
 
-        var indexCharge = electricField.findbySphere(electricField.transformControl.object);
-        electricField.allCharges[indexCharge].update();
+    var indexCharge = electricField.findbySphere(electricField.transformControl.object);
+    electricField.allCharges[indexCharge].update();
 
 
-} )
+})
+
+
+function quandoAFisicaFalha() {
+    var test = [];
+    test[0] = electricField.allCharges[0].properties.electricPotentialUnitVector.x;
+    test[1] = electricField.allCharges[0].properties.electricPotentialUnitVector.y;
+    test[2] = electricField.allCharges[0].properties.electricPotentialUnitVector.z;
+
+
+    console.log(test);
+
+    console.log(electricField.allCharges[0].properties.electricPotentialVector.length());
+
+    console.log(electricField.allCharges[0].sphere.position);
+
+
+
+}

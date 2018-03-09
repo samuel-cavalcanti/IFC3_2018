@@ -4,7 +4,7 @@ var universe = {
     antialias: true
   }),
   scene: new THREE.Scene(),
-  camera: new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 10000000),
+  camera: new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 10000),
   stats: new Stats(),
   mouse: new THREE.Vector2(),
   controls: null,

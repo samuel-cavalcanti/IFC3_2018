@@ -21,6 +21,8 @@ https://codepen.io/programking/pen/MyOQpO
 
 https://threejs.org/docs/#api/math/Euler
 
+http://www.ianww.com/blog/2012/11/04/optimizing-three-dot-js-performance-simulating-tens-of-thousands-of-independent-moving-objects/
+
   
   melhor de todas: 
  https://stackoverflow.com/
