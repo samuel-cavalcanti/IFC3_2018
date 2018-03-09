@@ -45,9 +45,9 @@ var electricField = {
 
         var intersects = electricField.raycaster.intersectObjects(universe.scene.children);
 
-        
-        if ( typeof intersects[0] === "undefined"){
-            
+
+        if (typeof intersects[0] === "undefined") {
+
             return;
         }
 
@@ -176,7 +176,7 @@ var electricField = {
 
         this.source = sphere;
 
-          universe.scene.add(sphere);
+        universe.scene.add(sphere);
     }
 
 

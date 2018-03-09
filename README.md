@@ -21,8 +21,42 @@ https://codepen.io/programking/pen/MyOQpO
 
 https://threejs.org/docs/#api/math/Euler
 
-http://www.ianww.com/blog/2012/11/04/optimizing-three-dot-js-performance-simulating-tens-of-thousands-of-independent-moving-objects/
+
 
   
   melhor de todas: 
  https://stackoverflow.com/
+
+
+ # TODO
+
+ ## otimizar código:
+*Bug*: ao mover objeto , existe perca de FPS  
+
+##  melhorar a visualização:  
+adicionar mais flechas simbolizando a força do campo
+
+
+
+
+# DICAS: 
+
+
+https://threejs.org/  
+
+https://threejs.org/examples/
+
+
+### mini-tutorial sobre o Three.js
+http://davidscottlyons.com/threejs-intro/#slide-0
+
+### ler muito... 
+http://www.ianww.com/blog/2012/11/04/optimizing-three-dot-js-performance-simulating-tens-of-thousands-of-independent-moving-objects/
+
+https://www.packtpub.com/web-development/threejs-essentials  
+
+https://www.packtpub.com/web-development/learning-threejs-%E2%80%93-javascript-3d-library-webgl-second-edition
+
+# TO-DO
+
+*comentar* *código* 
