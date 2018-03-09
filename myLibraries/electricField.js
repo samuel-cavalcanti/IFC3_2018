@@ -64,7 +64,7 @@ var electricField = {
 
 
             if (this.sphereOptions.item == null) {
-                this.sphereOptions.item = this.sphereOptions.folder.add(this.allCharges[indexCharge].properties, "guiCharge", 1, 1000).name("arrow length: ");
+                this.sphereOptions.item = this.sphereOptions.folder.add(this.allCharges[indexCharge].properties, "guiCharge", 1, 210).name("arrow length: ");
                 this.sphereOptions.folder.open();
             } else {
                 this.sphereOptions.item.object = this.allCharges[indexCharge].properties;

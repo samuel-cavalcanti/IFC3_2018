@@ -1,15 +1,14 @@
 function LineField(origin, target, length, type) {
     var object = this;
-    this.arrows = [];
     this.density = Math.PI / 3;
     this.type = type;
-    this.group  = new THREE.Group();
+    this.arrows  = new THREE.Group();
     createLineField();
 
 
 
     this.update = function (pOrigin, pTarget, length) {
-
+        
         var index = 0;
 
 
@@ -27,18 +26,17 @@ function LineField(origin, target, length, type) {
 
         }
 
-
+        
 
     }
 
     this.hide = function () {
-      universe.scene.remove(this.group);
+      universe.scene.remove(this.arrows);
     }
 
 
 
-    //this.arrows[i].update(pOrigin, pTarget, length);
-
+    
 
 
     function createLineField() {
@@ -47,9 +45,7 @@ function LineField(origin, target, length, type) {
             for (var angleY = 0; angleY < 2 * Math.PI; angleY += object.density) {
                 for (var angleZ = 0; angleZ < 2 * Math.PI; angleZ += object.density) {
                     eulerAngle = new THREE.Euler(angleX, angleY, angleZ, 'XYZ');
-                    var vector = createVector(eulerAngle);
-                   // object.arrows.push(vector);
-                    object.group.add(vector.arrow );
+                    object.arrows.add(createVector(eulerAngle));
 
 
                 }
@@ -58,7 +54,7 @@ function LineField(origin, target, length, type) {
 
         }
 
-        universe.scene.add(object.group);
+        universe.scene.add(object.arrows);
 
     }
 
@@ -76,9 +72,9 @@ function LineField(origin, target, length, type) {
 
 
 
-        var arrow = new Arrow(pOrigin, pTarget, length);
+        var arrow = new THREE.ArrowHelper(pTarget, pOrigin, length, "#ffffff");
 
-        //arrow.show();
+    
         return arrow;
     }
 
@@ -93,18 +89,20 @@ function LineField(origin, target, length, type) {
         var pOrigin = new THREE.Vector3().copy(origin);
        
         pOrigin.applyEuler(angle);
-
-        
-
-
         pOrigin.add(origin);
 
-        
 
-        object.group.children[index].position.copy(pOrigin);
-        object.group.children[index].setDirection(pTarget);
+    
 
-       // object.arrows[index].update(pOrigin, pTarget, length);
+      
+        object.arrows.children[index].position.copy(pOrigin);
+        object.arrows.children[index].setDirection(pTarget);
+        object.arrows.children[index].setLength(length);
+ 
+
+      
+
+     
 
     }
 

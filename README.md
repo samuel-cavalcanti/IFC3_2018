@@ -36,7 +36,8 @@ https://threejs.org/docs/#api/math/Euler
 ##  melhorar a visualização:  
 adicionar mais flechas simbolizando a força do campo
 
-
+##  facilitar  entendimento
+*comentar* *código* 
 
 
 # DICAS: 
@@ -57,6 +58,3 @@ https://www.packtpub.com/web-development/threejs-essentials
 
 https://www.packtpub.com/web-development/learning-threejs-%E2%80%93-javascript-3d-library-webgl-second-edition
 
-# TO-DO
-
-*comentar* *código* 

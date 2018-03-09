@@ -18,7 +18,7 @@
        this.properties = {
            coulombConstant: 9e-9,
            charge: 9e+12 * direction,
-           guiCharge: 500,
+           guiCharge: 105,
            electricPotentialVector: new THREE.Vector3(),
            electricPotentialUnitVector: new THREE.Vector3(),
            positionUnitVector: new THREE.Vector3(),
@@ -82,11 +82,15 @@
            var distance = object.sphere.position.distanceTo(new THREE.Vector3(1e-20, 1e-20, 1e-20));
 
 
-           var scalar = (object.properties.coulombConstant * object.properties.charge * object.properties.guiCharge) / Math.pow(distance, 2);
+           var scalar = (object.properties.coulombConstant * object.properties.charge) / Math.pow(distance, 2);
 
-           object.properties.arrowLength = Math.abs(scalar);
-           if (object.properties.arrowLength > 207)
-               object.properties.arrowLength = 207;
+           object.properties.arrowLength = Math.abs(scalar) +object.properties.guiCharge ;
+           if (object.properties.arrowLength > 210)
+               object.properties.arrowLength = 210;
+
+    
+           
+
 
            object.properties.electricPotentialVector.multiplyScalar(scalar);
 
